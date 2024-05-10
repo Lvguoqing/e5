@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #39c397;
+            color: #fff;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .page {
+            display: none;
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        .hero-banner {
+            background-image: url('1.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            height: 300px; 
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-banner">
+        <h1>Welcome to our Shopping App</h1>    
+    </div>  
+    <header>
+        <h1>Welcome to Leo's Shopping App</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('createUserPage')">Create User</a></li>
+                <li><a href="#" onclick="showPage('loginPage')">Login</a></li>
+                <li><a href="#" onclick="showPage('shoppingPage')">Shopping</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="createUserPage" class="page">
+        <!-- Create User Page -->
+        <h2>Create New User</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="createUser()">Create User</button>
+    </div>
+
+    <div id="loginPage" class="page">
+        <!-- login page -->
+        <h2>Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="shoppingPage" class="page">
+        <!-- Shopping page -->
+        <h2>Shopping Page</h2>
+        <select id="productSelect">
+            <option value="10">Product 1 - $10</option>
+            <option value="20">Product 2 - $20</option>
+            <option value="30">Product 3 - $30</option>
+        </select>
+        <input type="number" id="quantity" placeholder="Quantity">
+        <button onclick="checkout()">Checkout</button>
+        <div id="totalOrder"></div>
+    </div>
+
+    <footer>
+        <p>Student Details: Leo</p>
+    </footer>
+
+    <script>
+        var users = [];
+
+        function showPage(pageId) {
+            var pages = document.querySelectorAll('.page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].style.display = 'none';
+            }
+            document.getElementById(pageId).style.display = 'block';
+        }
+
+        function createUser() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            users.push({ username: username, password: password });
+            alert("User created successfully!");
+            showPage('loginPage');
+        }
+
+        function login() {
+            var loginUsername = document.getElementById("loginUsername").value;
+            var loginPassword = document.getElementById("loginPassword").value;
+            var found = false;
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].username === loginUsername && users[i].password === loginPassword) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                showPage('shoppingPage');
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
+        }
+
+        function checkout() {
+            var quantity = parseInt(document.getElementById("quantity").value);
+            var product = parseInt(document.getElementById("productSelect").value);
+            var total = quantity * product;
+            document.getElementById("totalOrder").innerText = "Total Order: $" + total;
+        }
+    </script>
+</body>
+</html>
